@@ -1,959 +1,819 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dr. Adanela Musaraj — High-Stakes Knowledge Arbitrage</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<style>
-  :root {
-    --ink: #0e0f13;
-    --paper: #f5f2ec;
-    --gold: #b8922e;
-    --gold-light: #d4a84b;
-    --slate: #2b2d3a;
-    --mid: #6b6d7d;
-    --rule: #d9d3c7;
-    --accent-bg: #1a1c26;
-    --white: #ffffff;
-    --col: calc((100% - 11 * 1px) / 12);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 15px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* ── GRID SYSTEM ── */
-  .grid-wrap {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border-top: 1px solid var(--rule);
-  }
-  .cell {
-    background: var(--paper);
-    padding: 2.5rem;
-  }
-  .cell-dark { background: var(--accent-bg); color: var(--paper); }
-  .cell-ink  { background: var(--ink); color: var(--paper); }
-  .cell-gold { background: var(--gold); color: var(--white); }
-
-  /* Span helpers */
-  .s1  { grid-column: span 1; }
-  .s2  { grid-column: span 2; }
-  .s3  { grid-column: span 3; }
-  .s4  { grid-column: span 4; }
-  .s5  { grid-column: span 5; }
-  .s6  { grid-column: span 6; }
-  .s7  { grid-column: span 7; }
-  .s8  { grid-column: span 8; }
-  .s9  { grid-column: span 9; }
-  .s10 { grid-column: span 10; }
-  .s12 { grid-column: span 12; }
-
-  /* ── TOPBAR ── */
-  .topbar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding: 0.9rem 2.5rem;
-    background: var(--ink);
-    color: var(--paper);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 2px solid var(--gold);
-  }
-  .topbar-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 1.05rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .topbar-nav {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-  .topbar-nav a {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--rule);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .topbar-nav a:hover { color: var(--gold-light); }
-
-  /* ── HERO ── */
-  .hero-section {
-    background: var(--ink);
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1px;
-    border-bottom: 2px solid var(--gold);
-  }
-  .hero-label-col {
-    grid-column: span 1;
-    background: var(--gold);
-    display: flex;
-    align-items: flex-end;
-    padding: 2.5rem 1rem;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    min-height: 460px;
-  }
-  .hero-label-col span {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .hero-main {
-    grid-column: span 8;
-    background: var(--ink);
-    padding: 4rem 3.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  .hero-aside {
-    grid-column: span 3;
-    background: var(--accent-bg);
-    padding: 3rem 2rem;
-    border-left: 1px solid rgba(184,146,46,0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .hero-pre {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.4rem;
-  }
-  .hero-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(2.8rem, 5vw, 5rem);
-    line-height: 1.05;
-    color: var(--white);
-    letter-spacing: -0.01em;
-    margin-bottom: 0.5rem;
-  }
-  .hero-name em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 1.35rem;
-    color: rgba(245,242,236,0.55);
-    letter-spacing: 0.02em;
-    margin-bottom: 2.5rem;
-  }
-  .hero-desc {
-    font-size: 0.92rem;
-    color: rgba(245,242,236,0.75);
-    line-height: 1.8;
-    max-width: 56ch;
-    border-left: 2px solid var(--gold);
-    padding-left: 1.2rem;
-  }
-  .aside-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.8rem;
-  }
-  .aside-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .aside-list li {
-    font-size: 0.78rem;
-    color: rgba(245,242,236,0.65);
-    line-height: 1.5;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .aside-list li:last-child { border-bottom: none; }
-  .aside-contact {
-    margin-top: 2rem;
-  }
-  .aside-contact a {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--gold-light);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    word-break: break-all;
-  }
-
-  /* ── SECTION HEADERS ── */
-  .section-header {
-    grid-column: span 12;
-    background: var(--slate);
-    color: var(--paper);
-    padding: 1.2rem 2.5rem;
-    display: flex;
-    align-items: baseline;
-    gap: 2rem;
-  }
-  .section-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 1.5rem;
-    letter-spacing: 0.04em;
-  }
-  .section-nace {
-    margin-left: auto;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: rgba(245,242,236,0.4);
-    letter-spacing: 0.08em;
-  }
-
-  /* ── TYPOGRAPHY ELEMENTS ── */
-  .cell h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 1.25rem;
-    margin-bottom: 0.8rem;
-    letter-spacing: 0.02em;
-  }
-  .cell-dark h3, .cell-ink h3 { color: var(--paper); }
-
-  .cell h4 {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.6rem;
-    margin-top: 1.4rem;
-  }
-  .cell h4:first-child { margin-top: 0; }
-
-  .cell p {
-    font-size: 0.88rem;
-    line-height: 1.78;
-    color: inherit;
-    opacity: 0.88;
-  }
-  .cell-dark p, .cell-ink p { opacity: 0.75; }
-
-  .service-list {
-    list-style: none;
-    margin-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-  .service-list li {
-    font-size: 0.84rem;
-    line-height: 1.6;
-    padding-left: 1rem;
-    position: relative;
-  }
-  .service-list li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--gold);
-    font-size: 0.7rem;
-  }
-
-  .arbitrage-tag {
-    display: inline-block;
-    margin-top: 1.2rem;
-    padding: 0.35rem 0.9rem;
-    border: 1px solid var(--gold);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .cell-dark .arbitrage-tag, .cell-ink .arbitrage-tag { color: var(--gold-light); border-color: var(--gold-light); }
-
-  .nace-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    color: var(--mid);
-    display: block;
-    margin-top: 0.3rem;
-  }
-  .cell-dark .nace-badge, .cell-ink .nace-badge { color: rgba(245,242,236,0.35); }
-
-  .rule-line {
-    display: block;
-    height: 2px;
-    background: var(--gold);
-    width: 2.5rem;
-    margin: 1rem 0;
-  }
-
-  /* ── PROFILE STATS STRIP ── */
-  .stat-strip {
-    display: contents;
-  }
-  .stat-cell {
-    background: var(--gold);
-    padding: 2rem 2.5rem;
-    grid-column: span 3;
-  }
-  .stat-cell:nth-child(even) { background: var(--ink); }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    font-weight: 300;
-    line-height: 1;
-    color: var(--white);
-    margin-bottom: 0.3rem;
-  }
-  .stat-cell:nth-child(odd) .stat-num { color: var(--ink); }
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink);
-    opacity: 0.75;
-  }
-  .stat-cell:nth-child(even) .stat-label { color: var(--rule); opacity: 0.7; }
-
-  /* ── DOMAINS GRID ── */
-  .domain-pill {
-    display: inline-block;
-    background: var(--rule);
-    color: var(--slate);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    padding: 0.25rem 0.7rem;
-    margin: 0.2rem;
-    text-transform: uppercase;
-  }
-
-  /* ── FOOTER ── */
-  .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1px;
-    background: var(--rule);
-    border-top: 2px solid var(--gold);
-  }
-  .footer-main {
-    grid-column: span 7;
-    background: var(--ink);
-    padding: 3.5rem 3rem;
-  }
-  .footer-contact {
-    grid-column: span 5;
-    background: var(--gold);
-    padding: 3.5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .footer-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 2.2rem;
-    color: var(--paper);
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-  .footer-tagline {
-    font-size: 0.85rem;
-    color: rgba(245,242,236,0.55);
-    max-width: 48ch;
-    line-height: 1.75;
-  }
-  .footer-contact h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 1.8rem;
-    color: var(--ink);
-    margin-bottom: 1.5rem;
-  }
-  .contact-line {
-    font-size: 0.85rem;
-    margin-bottom: 0.6rem;
-    color: var(--ink);
-  }
-  .contact-line strong {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 0.15rem;
-    font-weight: 400;
-    opacity: 0.7;
-  }
-  .contact-line a {
-    color: var(--ink);
-    text-decoration: none;
-    font-size: 0.9rem;
-    border-bottom: 1px solid rgba(14,15,19,0.35);
-    padding-bottom: 1px;
-  }
-  .footer-copy {
-    grid-column: span 12;
-    background: var(--slate);
-    padding: 1rem 2.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .footer-copy span {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: rgba(245,242,236,0.35);
-    text-transform: uppercase;
-  }
-
-  /* ── MOBILE NAV TOGGLE ── */
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    flex-direction: column;
-    gap: 5px;
-    padding: 4px;
-  }
-  .nav-toggle span {
-    display: block;
-    width: 22px;
-    height: 1.5px;
-    background: var(--paper);
-    transition: 0.2s;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1100px) {
-    .s5 { grid-column: span 6; }
-    .s7 { grid-column: span 6; }
-    .s3 { grid-column: span 4; }
-    .s9 { grid-column: span 8; }
-  }
-
-  @media (max-width: 768px) {
-    .topbar { padding: 0.8rem 1.2rem; }
-    .topbar-nav { display: none; }
-    .topbar-nav.open {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 48px;
-      right: 0;
-      background: var(--ink);
-      padding: 1.5rem;
-      gap: 1.2rem;
-      border-left: 2px solid var(--gold);
-      z-index: 99;
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Dr. Adanela Musaraj — High-Stakes Knowledge Arbitrage Consultant for institutional clients: Banks, UN agencies, EU agencies, International NGOs. Specializing in program evaluation, TRL3-7 assessments, IP evaluation, scientific due diligence. Fully remote international conference services with ISBN, ISSN, ORCID, DOI, ROR indexing."/>
+  <meta name="keywords" content="evaluator, assessor, interreg, World Bank, IMF, program evaluation, project evaluation, startup evaluation, IP evaluation, TRL3-7 assessments, scientific-policy-finance interface, health biotechnology, EU compliance, NACE classification"/>
+  <meta name="author" content="Dr. Adanela Musaraj"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Dr. Adanela Musaraj — High-Stakes Knowledge Arbitrage"/>
+  <meta property="og:description" content="Scientific-Policy-Finance Interface Consultant specializing in Health & Biotechnology Systems. Institutional evaluation services for Banks, UN, EU, NGOs."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://health.scientia-naturalis.org"/>
+  
+  <!-- Structured Data for AI Indexability -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dr. Adanela Musaraj",
+    "jobTitle": "Scientific-Policy-Finance Interface Consultant",
+    "description": "High-Stakes Knowledge Arbitrage in Health & Biotechnology Systems. Specializing in program evaluation, project evaluation, startup evaluation, IP evaluation, TRL3-7 assessments.",
+    "url": "https://health.scientia-naturalis.org",
+    "email": "mailto:adanela.musaraj@yahoo.fr",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Scientia Naturalis",
+      "url": "https://scientia-naturalis.org"
+    },
+    "knowsAbout": [
+      "Program Evaluation",
+      "Project Evaluation", 
+      "Startup Evaluation",
+      "IP Evaluation",
+      "TRL3-7 Assessments",
+      "Health Biotechnology",
+      "EU Compliance Navigation",
+      "NACE Classification Q86/K65",
+      "Scientific Due Diligence"
+    ],
+    "areaServed": "Worldwide",
+    "availableLanguage": ["English", "French", "Albanian"],
+    "offers": {
+      "@type": "Service",
+      "serviceType": "High-Stakes Knowledge Arbitrage Consulting",
+      "provider": {"@type": "Person", "name": "Dr. Adanela Musaraj"},
+      "areaServed": "Global",
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://health.scientia-naturalis.org",
+        "availableLanguage": "English"
+      }
     }
-    .nav-toggle { display: flex; }
-
-    .hero-section,
-    .grid-wrap,
-    .footer-grid { grid-template-columns: 1fr; gap: 1px; }
-
-    .hero-label-col { display: none; }
-    .hero-main { grid-column: 1 / -1; padding: 2.5rem 1.5rem; }
-    .hero-aside { grid-column: 1 / -1; padding: 2rem 1.5rem; }
-
-    .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9,.s10,.s12 { grid-column: 1 / -1; }
-    .stat-cell { grid-column: span 1; }
-
-    .section-header { flex-wrap: wrap; gap: 0.5rem; padding: 1rem 1.5rem; }
-    .section-nace { margin-left: 0; width: 100%; }
-
-    .cell { padding: 1.8rem 1.5rem; }
-    .stat-cell { padding: 1.5rem; }
-    .footer-main { padding: 2.5rem 1.5rem; }
-    .footer-contact { padding: 2.5rem 1.5rem; }
-    .footer-copy { flex-direction: column; gap: 0.4rem; text-align: center; padding: 0.8rem 1.5rem; }
   }
+  </script>
+  
+  <!-- Conference/Indexing Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "International Conference Advisory Services",
+    "description": "Fully remote international conference services with ISBN, ISSN, ORCID, DOI, and ROR indexing support for academic and institutional publications.",
+    "provider": {"@type": "Person", "name": "Dr. Adanela Musaraj"},
+    "serviceOutput": {
+      "@type": "CreativeWork",
+      "identifier": [
+        {"@type": "PropertyValue", "propertyID": "ISBN", "value": "Available upon engagement"},
+        {"@type": "PropertyValue", "propertyID": "ISSN", "value": "Available upon engagement"},
+        {"@type": "PropertyValue", "propertyID": "ORCID", "value": "Integrated for researcher profiles"},
+        {"@type": "PropertyValue", "propertyID": "DOI", "value": "Assigned to deliverables"},
+        {"@type": "PropertyValue", "propertyID": "ROR", "value": "Institutional identifier mapping"}
+      ]
+    },
+    "areaServed": "Worldwide",
+    "availableLanguage": "English"
+  }
+  </script>
 
-  /* ── SCROLL ANIMATION ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
+  <!-- Tailwind CSS CDN (for prototyping; use build process for production) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0e0f13',
+            paper: '#f5f2ec',
+            gold: '#b8922e',
+            'gold-light': '#d4a84b',
+            slate: '#2b2d3a',
+            mid: '#6b6d7d',
+            rule: '#d9d3c7',
+            'accent-bg': '#1a1c26',
+            'glass-bg': 'rgba(26, 28, 38, 0.65)',
+            'glass-border': 'rgba(184, 146, 46, 0.12)'
+          },
+          borderRadius: {
+            '2xl': '1rem',
+            '3xl': '1.5rem'
+          },
+          spacing: {
+            '8n': '0.5rem',    // 8px
+            '16n': '1rem',     // 16px
+            '24n': '1.5rem',   // 24px
+            '32n': '2rem',     // 32px
+            '40n': '2.5rem',   // 40px
+            '48n': '3rem',     // 48px
+            '64n': '4rem',     // 64px
+            '80n': '5rem',     // 80px
+            '96n': '6rem'      // 96px
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'serif'],
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            mono: ['DM Mono', 'monospace']
+          },
+          fontSize: {
+            'fluid-h1': 'clamp(2.5rem, 5vw, 4.5rem)',
+            'fluid-h2': 'clamp(1.75rem, 3.5vw, 2.75rem)',
+            'fluid-h3': 'clamp(1.35rem, 2.5vw, 1.85rem)',
+            'fluid-body': 'clamp(0.9rem, 1.2vw, 1.05rem)',
+            'fluid-sm': 'clamp(0.75rem, 1vw, 0.875rem)',
+            'fluid-xs': 'clamp(0.625rem, 0.8vw, 0.75rem)'
+          },
+          boxShadow: {
+            'umbra-penumbra': `
+              0 1px 2px rgba(0,0,0,0.08),
+              0 4px 8px rgba(0,0,0,0.06),
+              0 12px 24px rgba(0,0,0,0.04),
+              0 24px 48px rgba(0,0,0,0.02),
+              0 48px 96px rgba(0,0,0,0.01)
+            `,
+            'umbra-penumbra-hover': `
+              0 2px 4px rgba(184,146,46,0.12),
+              0 8px 16px rgba(184,146,46,0.09),
+              0 16px 32px rgba(184,146,46,0.06),
+              0 32px 64px rgba(184,146,46,0.03),
+              0 64px 128px rgba(184,146,46,0.015)
+            `,
+            'glass': `
+              0 1px 1px rgba(0,0,0,0.05),
+              0 4px 6px rgba(0,0,0,0.03),
+              0 10px 20px rgba(0,0,0,0.02),
+              0 20px 40px rgba(0,0,0,0.01),
+              0 40px 80px rgba(0,0,0,0.005)
+            `
+          },
+          transitionTimingFunction: {
+            'premium': 'cubic-bezier(0.23, 1, 0.32, 1)'
+          },
+          transitionDuration: {
+            '400': '400ms'
+          },
+          keyframes: {
+            'grain-shift': {
+              '0%': { transform: 'translate(0, 0)' },
+              '10%': { transform: 'translate(-1%, -1%)' },
+              '20%': { transform: 'translate(1%, 0.5%)' },
+              '30%': { transform: 'translate(-0.5%, 1%)' },
+              '40%': { transform: 'translate(0.5%, -0.5%)' },
+              '50%': { transform: 'translate(-1%, 0.5%)' },
+              '60%': { transform: 'translate(1%, -1%)' },
+              '70%': { transform: 'translate(-0.5%, 1%)' },
+              '80%': { transform: 'translate(0.5%, -0.5%)' },
+              '90%': { transform: 'translate(-1%, 1%)' },
+              '100%': { transform: 'translate(0, 0)' }
+            },
+            'cursor-pulse': {
+              '0%, 100%': { transform: 'scale(1)', opacity: '0.6' },
+              '50%': { transform: 'scale(1.15)', opacity: '0.35' }
+            }
+          },
+          animation: {
+            'grain-shift': 'grain-shift 8s steps(10) infinite',
+            'cursor-pulse': 'cursor-pulse 2s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ── CORE RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 300;
+      background: #0e0f13;
+      color: #f5f2ec;
+      font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+      line-height: 1.8;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── FLUID TYPOGRAPHY ── */
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+    h2 { font-size: clamp(1.75rem, 3.5vw, 2.75rem); }
+    h3 { font-size: clamp(1.35rem, 2.5vw, 1.85rem); }
+    h4 { 
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.625rem, 0.8vw, 0.75rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #d4a84b;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── PREMIUM TRANSITIONS ── */
+    .transition-premium {
+      transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .transition-premium-fast {
+      transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1), opacity 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* ── GLASSMORPHISM CARD ── */
+    .glass-card {
+      background: rgba(26, 28, 38, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(184, 146, 46, 0.12);
+      border-radius: 1rem;
+      box-shadow: 
+        0 1px 2px rgba(0,0,0,0.08),
+        0 4px 8px rgba(0,0,0,0.06),
+        0 12px 24px rgba(0,0,0,0.04),
+        0 24px 48px rgba(0,0,0,0.02),
+        0 48px 96px rgba(0,0,0,0.01);
+    }
+    .glass-card:hover {
+      border-color: rgba(184, 146, 46, 0.28);
+      box-shadow: 
+        0 2px 4px rgba(184,146,46,0.12),
+        0 8px 16px rgba(184,146,46,0.09),
+        0 16px 32px rgba(184,146,46,0.06),
+        0 32px 64px rgba(184,146,46,0.03),
+        0 64px 128px rgba(184,146,46,0.015);
+    }
+
+    /* ── BENTO GRID LAYOUT ── */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+    .bento-item {
+      grid-column: span 4;
+      min-height: 280px;
+    }
+    .bento-item-wide { grid-column: span 8; }
+    .bento-item-tall { grid-row: span 2; }
+    
+    @media (max-width: 1024px) {
+      .bento-item, .bento-item-wide { grid-column: span 6; }
+    }
+    @media (max-width: 640px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-item, .bento-item-wide { grid-column: span 1; }
+    }
+
+    /* ── STAGGERED REVEAL ANIMATION ── */
+    .reveal-stagger {
+      opacity: 0;
+      transform: translateY(200px);
+      transition: opacity 400ms cubic-bezier(0.23, 1, 0.32, 1), transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .reveal-stagger.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-stagger:nth-child(1) { transition-delay: 0ms; }
+    .reveal-stagger:nth-child(2) { transition-delay: 100ms; }
+    .reveal-stagger:nth-child(3) { transition-delay: 200ms; }
+    .reveal-stagger:nth-child(4) { transition-delay: 300ms; }
+    .reveal-stagger:nth-child(5) { transition-delay: 400ms; }
+    .reveal-stagger:nth-child(6) { transition-delay: 500ms; }
+    .reveal-stagger:nth-child(7) { transition-delay: 600ms; }
+    .reveal-stagger:nth-child(8) { transition-delay: 700ms; }
+
+    /* ── GRAIN/NOISE OVERLAY ── */
+    .grain-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      animation: grain-shift 8s steps(10) infinite;
+      mix-blend-mode: overlay;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 24px; height: 24px;
+      border: 1.5px solid #d4a84b;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1), opacity 400ms cubic-bezier(0.23, 1, 0.32, 1);
+      opacity: 0.85;
+      mix-blend-mode: difference;
+    }
+    .custom-cursor.hovering {
+      transform: translate(-50%, -50%) scale(2.8);
+      opacity: 0.25;
+      filter: blur(4px);
+      border-width: 2px;
+    }
+    .clickable { cursor: none; }
+
+    /* ── BUTTON STYLES ── */
+    .btn-luxury {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.625rem, 0.8vw, 0.75rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(184, 146, 46, 0.4);
+      color: #d4a84b;
+      border-radius: 0.75rem;
+      transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .btn-luxury:hover {
+      background: rgba(184, 146, 46, 0.08);
+      border-color: #d4a84b;
+      transform: translateY(-2px);
+      box-shadow: 
+        0 2px 4px rgba(184,146,46,0.12),
+        0 8px 16px rgba(184,146,46,0.09),
+        0 16px 32px rgba(184,146,46,0.06),
+        0 32px 64px rgba(184,146,46,0.03),
+        0 64px 128px rgba(184,146,46,0.015);
+    }
+    .btn-luxury:active { transform: translateY(0); }
+
+    /* ── FUNNEL SECTION STYLES ── */
+    .funnel-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .funnel-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #b8922e, transparent);
+      opacity: 0;
+      transition: opacity 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .funnel-card:hover::before { opacity: 1; }
+
+    /* ── UTILITY CLASSES ── */
+    .text-gold { color: #d4a84b; }
+    .text-gold-light { color: #d4a84b; }
+    .border-subtle { border-color: rgba(217, 211, 199, 0.15); }
+    .bg-ink { background: #0e0f13; }
+    .bg-accent { background: #1a1c26; }
+    
+    /* Hide native cursor when custom cursor is active */
+    @media (pointer: fine) {
+      a, button, [role="button"], .clickable { cursor: none; }
+    }
+  </style>
 </head>
-<body>
+<body class="dark">
 
-<!-- TOPBAR -->
-<header class="topbar" id="top">
-  <div class="topbar-name">Dr. Adanela Musaraj</div>
-  <nav>
-    <ul class="topbar-nav" id="mainNav">
-      <li><a href="#profile">Profile</a></li>
-      <li><a href="#arbitrage">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('mainNav').classList.toggle('open')">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-</header>
+  <!-- Grain Noise Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+  
+  <!-- Custom Cursor -->
+  <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
 
-
-<!-- ════════════════════════════════════════ -->
-<!-- SLOT 1 — PROFILE -->
-<!-- ════════════════════════════════════════ -->
-<section id="profile">
-<div class="hero-section">
-  <div class="hero-label-col">
-    <span>Profile — High-Stakes Knowledge Arbitrage</span>
-  </div>
-  <div class="hero-main">
-    <div class="hero-pre">Scientific · Policy · Finance Interface</div>
-    <h1 class="hero-name">Dr. Adanela<br><em>Musaraj</em></h1>
-    <p class="hero-title">High-Stakes Knowledge Arbitrage Advisor<br>Health · Biotechnology · Education · Agri-Food Systems</p>
-    <p class="hero-desc">
-      Dr. Adanela Musaraj operates at the precise intersection of molecular science, regulatory frameworks, and institutional finance — converting deep domain expertise into actionable intelligence for Banks, UN agencies, EU bodies, International NGOs, and Education Industry stakeholders. Her practice is built on a single irreplaceable capability: translating what is scientifically true into what is institutionally legible and financially actionable.
-    </p>
-  </div>
-  <div class="hero-aside">
-    <div>
-      <div class="aside-label">Core Domains</div>
-      <ul class="aside-list">
-        <li>Health Industry Knowledge Systems</li>
-        <li>Food Security &amp; Agri-Food Intelligence</li>
-        <li>Environment &amp; Climate Data Systems</li>
-        <li>Education Policy &amp; Digital Transformation</li>
-        <li>Biotechnology R&amp;D Advisory</li>
-        <li>Scientific Due Diligence for Finance</li>
-      </ul>
-    </div>
-    <div class="aside-contact">
-      <div class="aside-label">Direct Contact</div>
-      <a href="mailto:adanela.musaraj@yahoo.fr">adanela.musaraj@yahoo.fr</a>
-    </div>
-  </div>
-</div>
-
-<!-- STATS STRIP -->
-<div class="grid-wrap">
-  <div class="stat-strip">
-    <div class="stat-cell">
-      <div class="stat-num" style="color:var(--ink)">8</div>
-      <div class="stat-label">Structured Service Portfolios</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-num">4</div>
-      <div class="stat-label">Industry Sectors Covered</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-num" style="color:var(--ink)">UN · EU · Banks</div>
-      <div class="stat-label" style="font-size:0.55rem">Primary Institutional Clients</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-num">NACE M · P · E</div>
-      <div class="stat-label" style="font-size:0.55rem">Primary Classification Codes</div>
-    </div>
-  </div>
-
-  <!-- Profile Detail Row -->
-  <div class="cell s8 reveal" style="padding-top:2.5rem">
-    <h4>Scientific-Policy-Finance Interface Consultancy</h4>
-    <p>Dr. Musaraj's consultancy is grounded in the recognition that the most consequential decisions in global health, food systems, education, and environment are made not by scientists alone — but by institutions that must act on scientific knowledge without the capacity to generate it internally. The knowledge gap between expert and decision-maker is where her work operates, and the arbitrage value she delivers is precisely the bridging of that gap under conditions of high stakes and institutional accountability.</p>
-    <span class="rule-line"></span>
-    <h4>NACE Anchor Classification</h4>
-    <p>All consultancy activities are formally classifiable under <strong>72.10 — Research &amp; Experimental Development on Natural Sciences and Engineering</strong>, covering R&amp;D in natural sciences, engineering, biotechnology, environmental sciences, and interdisciplinary work. Further classifications span Sections M (Professional, Scientific &amp; Technical), P (Education), E (Environmental Services), and A–D (Natural Resources &amp; Energy Systems).</p>
-  </div>
-  <div class="cell s4 cell-dark reveal">
-    <h4>Institutional Clients</h4>
-    <ul class="service-list">
-      <li>Commercial and Development Banks</li>
-      <li>United Nations Agencies (WHO, UNESCO, FAO, UNDP)</li>
-      <li>European Union Agencies and DGs</li>
-      <li>International NGOs and Foundations</li>
-      <li>Education Industry Stakeholders</li>
-    </ul>
-    <div style="margin-top:1.5rem">
-      <h4>SDG Alignment</h4>
-      <ul class="service-list">
-        <li>SDG 2 — Zero Hunger / Food Security</li>
-        <li>SDG 3 — Good Health &amp; Well-Being</li>
-        <li>SDG 4 — Quality Education</li>
-        <li>SDG 13 — Climate Action</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Service Domains Preview -->
-  <div class="cell s12 reveal" style="background:var(--slate); color:var(--paper)">
-    <h4 style="color:var(--gold)">Full Service Domain Coverage</h4>
-    <div style="margin-top:0.8rem">
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Education Data + Policy Integration</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">EMIS + Decision Systems</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Digital Transformation of Education</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">LMS + Teacher Training</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Inclusive &amp; Gender-Responsive Systems</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">TVET + Labour Market Alignment</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Programme Implementation Outsourcing</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Food Security Early Warning Systems</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Global Commodity &amp; Price Intelligence</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Traceability &amp; Supply Chain Transparency</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Climate-Agriculture Data Systems</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Agri-Food Data Platform Ownership</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Health Industry Knowledge Arbitrage</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Biotech R&amp;D Advisory</span>
-      <span class="domain-pill" style="background:rgba(184,146,46,0.15); color:var(--gold-light)">Scientific Due Diligence</span>
-    </div>
-  </div>
-</div>
-</section>
-
-
-<!-- ════════════════════════════════════════ -->
-<!-- SLOT 2 — KNOWLEDGE ARBITRAGE SERVICES -->
-<!-- ════════════════════════════════════════ -->
-<section id="arbitrage">
-<div class="grid-wrap">
-
-  <!-- Slot 2 Intro -->
-  <div class="cell s12 cell-ink" style="padding:3rem 2.5rem;">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start;">
-      <div>
-        <div class="aside-label" style="color:var(--gold); font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:1rem;">Knowledge Arbitrage — What It Means</div>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:300; font-size:2.4rem; color:var(--white); line-height:1.15; margin-bottom:1.2rem;">The Intelligence Gap<br><em style="color:var(--gold-light); font-style:italic;">Is the Value</em></h2>
-        <p style="font-size:0.9rem; color:rgba(245,242,236,0.7); line-height:1.8; max-width:52ch;">A high-trust, high-value knowledge arbitrage consultant translates complex scientific, regulatory, and policy knowledge across institutions that cannot generate it internally. Banks require clinical risk in financial language. UN agencies require science in implementation frameworks. EU bodies require regulatory intelligence in policy briefs. Dr. Musaraj's service portfolio is structured to be NACE-coded, procurement-compatible, and institutionally legible — meaning institutions can actually buy what she delivers.</p>
+  <!-- TOPBAR -->
+  <header class="sticky top-0 z-50 bg-ink/95 backdrop-blur-sm border-b border-subtle transition-premium">
+    <div class="max-w-7xl mx-auto px-8n py-4n flex items-center justify-between">
+      <div class="font-serif font-light text-fluid-xs tracking-widest uppercase text-gold">
+        Dr. Adanela Musaraj
       </div>
-      <div>
-        <div class="aside-label" style="color:var(--gold); font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:1rem;">Structured Service Architecture</div>
-        <p style="font-size:0.85rem; color:rgba(245,242,236,0.65); line-height:1.75; margin-bottom:1.2rem;">Each service portfolio below is aligned with formal NACE classifications and designed to fit standard institutional procurement frameworks. Services are delivered as advisory mandates, programme designs, evaluation contracts, training engagements, or platform development commissions.</p>
-        <div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.8rem;">
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">M 70.22</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">M 72.11</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">M 72.19</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">M 74.90</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">P 85.59</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">Q 86.90</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">K 64.99</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">J 63.99</span>
-          <span style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold); border:1px solid rgba(184,146,46,0.4); padding:0.2rem 0.6rem;">M 74.30</span>
+      <nav class="hidden md:flex items-center gap-8n">
+        <a href="#profile" class="font-mono text-fluid-xs tracking-wide uppercase text-mid hover:text-gold-light transition-premium clickable">Profile</a>
+        <a href="#services" class="font-mono text-fluid-xs tracking-wide uppercase text-mid hover:text-gold-light transition-premium clickable">Services</a>
+        <a href="#funnel" class="font-mono text-fluid-xs tracking-wide uppercase text-mid hover:text-gold-light transition-premium clickable">For Institutions</a>
+        <a href="#contact" class="font-mono text-fluid-xs tracking-wide uppercase text-mid hover:text-gold-light transition-premium clickable">Contact</a>
+      </nav>
+      <button class="md:hidden text-gold clickable" aria-label="Menu">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="profile" class="relative py-24n px-8n">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8n">
+      
+      <!-- Label Column -->
+      <div class="lg:col-span-1 hidden lg:flex items-end pb-8n">
+        <span class="font-mono text-fluid-xs tracking-widest uppercase text-gold rotate-180 writing-mode-vertical-rl" style="writing-mode: vertical-rl; transform: rotate(180deg);">
+          Profile — Knowledge Arbitrage
+        </span>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="lg:col-span-8">
+        <div class="font-mono text-fluid-xs tracking-widest uppercase text-gold mb-6n">
+          Scientific · Policy · Finance Interface
+        </div>
+        <h1 class="text-fluid-h1 mb-4n">
+          Dr. Adanela<br><em class="text-gold-light italic">Musaraj</em>
+        </h1>
+        <h2 class="font-serif font-normal text-fluid-h3 text-paper/70 mb-8n">
+          High-Stakes Knowledge Arbitrage Advisor<br/>
+          Health · Biotechnology · Education · Agri-Food Systems
+        </h2>
+        <p class="text-fluid-body text-paper/80 max-w-3xl border-l-2 border-gold pl-6n leading-relaxed">
+          Operating at the precise intersection of molecular science, regulatory frameworks, and institutional finance — converting deep domain expertise into actionable intelligence for Banks, UN agencies, EU bodies, International NGOs, and Education Industry stakeholders. Translating what is scientifically true into what is institutionally legible and financially actionable.
+        </p>
+      </div>
+      
+      <!-- Aside -->
+      <div class="lg:col-span-3 glass-card p-8n flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-fluid-xs tracking-widest uppercase text-gold mb-4n">Core Domains</div>
+          <ul class="space-y-3n text-fluid-sm text-paper/70">
+            <li class="border-b border-white/5 pb-2n">Health Industry Knowledge Systems</li>
+            <li class="border-b border-white/5 pb-2n">Food Security &amp; Agri-Food Intelligence</li>
+            <li class="border-b border-white/5 pb-2n">Environment &amp; Climate Data Systems</li>
+            <li class="border-b border-white/5 pb-2n">Education Policy &amp; Digital Transformation</li>
+            <li class="border-b border-white/5 pb-2n">Biotechnology R&amp;D Advisory</li>
+            <li>Scientific Due Diligence for Finance</li>
+          </ul>
+        </div>
+        <div class="mt-8n">
+          <div class="font-mono text-fluid-xs tracking-widest uppercase text-gold mb-3n">Direct Contact</div>
+          <a href="mailto:adanela.musaraj@yahoo.fr" class="font-mono text-fluid-sm text-gold-light hover:text-gold transition-premium clickable block break-all">
+            adanela.musaraj@yahoo.fr
+          </a>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- SERVICE 1 -->
-  <div class="section-header reveal">
-    <span class="section-num">01 / 08</span>
-    <span class="section-title">Strategic Science &amp; Policy Advisory</span>
-    <span class="section-nace">NACE M70.22 · M72.19 · M74.90</span>
-  </div>
-  <div class="cell s7 reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Science to policy to finance. This portfolio converts molecular biology, pharmaceutical insights, and regulatory science into the language of institutional decision-making — whether that decision is a legislative brief, a procurement strategy, or an investment risk framework.</p>
-    <span class="rule-line"></span>
-    <h4>Services Delivered</h4>
-    <ul class="service-list">
-      <li>Science-to-Policy Translation Advisory — converting molecular biology and pharma insights into policy briefs for EU and UN audiences</li>
-      <li>Regulatory Intelligence &amp; Foresight — EMA, WHO, and FDA alignment analysis for institutional planning</li>
-      <li>Evidence-Based Decision Support for Banks — risk analysis for biotech and pharma investment portfolios</li>
-      <li>Public Health Strategy Design — pandemic preparedness frameworks and biotech sovereignty assessments</li>
-    </ul>
-  </div>
-  <div class="cell s5 cell-dark reveal">
-    <h4>Arbitrage Value</h4>
-    <p>Deep science translated into policy language translated into financial risk frameworks. The arbitrage is the translation itself — an asset no single institution possesses internally, and which is irreproducible without both scientific and institutional fluency.</p>
-    <div class="arbitrage-tag">Science ↔ Policy ↔ Finance</div>
-    <span class="nace-badge">M70.22 Management Consultancy · M72.19 Scientific R&amp;D · M74.90 Technical Activities</span>
-  </div>
-
-  <!-- SERVICE 2 -->
-  <div class="section-header reveal">
-    <span class="section-num">02 / 08</span>
-    <span class="section-title">Health &amp; Pharma Programme Design</span>
-    <span class="section-nace">NACE M70.22 · Q86.90 · M72.11</span>
-  </div>
-  <div class="cell s5 cell-dark reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Guidelines to implementation to measurable impact. This portfolio bridges international health guidelines with real-world programme execution at national and sub-national levels — including pharmaceutical supply chains and clinical research ecosystem development.</p>
-    <div class="arbitrage-tag">Guidelines ↔ Implementation ↔ Impact</div>
-    <span class="nace-badge">M70.22 · Q86.90 Human Health · M72.11 Biotechnology R&amp;D</span>
-  </div>
-  <div class="cell s7 reveal">
-    <h4>Services Delivered</h4>
-    <ul class="service-list">
-      <li>Design and architecture of national health programmes aligned with WHO and regional normative frameworks</li>
-      <li>Pharmaceutical supply chain strategy for procurement-constrained environments</li>
-      <li>Clinical research ecosystem development in emerging and transitional markets</li>
-      <li>Biotech innovation programmes for economies building sovereign health capacity</li>
-    </ul>
-    <span class="rule-line"></span>
-    <p style="font-size:0.82rem; opacity:0.7;">WHO guidelines are translated into country-level implementation frameworks with procurement, workforce, and regulatory components fully integrated.</p>
-  </div>
-
-  <!-- SERVICE 3 -->
-  <div class="section-header reveal">
-    <span class="section-num">03 / 08</span>
-    <span class="section-title">High-Level Evaluation &amp; Impact Assessment</span>
-    <span class="section-nace">NACE M70.22 · M72.20</span>
-  </div>
-  <div class="cell s4 reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Funding to results to accountability. Scientific rigor translated into measurable, fundable impact — for Erasmus+, Horizon Europe, UN health programmes, and education mandates.</p>
-    <div class="arbitrage-tag">Funding ↔ Results ↔ Accountability</div>
-  </div>
-  <div class="cell s4 cell-dark reveal">
-    <h4>Programme Evaluation</h4>
-    <ul class="service-list">
-      <li>Erasmus+ programme evaluation</li>
-      <li>Horizon Europe project assessment</li>
-      <li>UN-funded health programme evaluation</li>
-      <li>Education programme impact review</li>
-    </ul>
-  </div>
-  <div class="cell s4 reveal">
-    <h4>Impact Metrics &amp; Validation</h4>
-    <ul class="service-list">
-      <li>SDG outcome indicator design and measurement</li>
-      <li>ESG frameworks for health and education investments</li>
-      <li>Public health outcome quantification</li>
-      <li>Scientific validation of project outputs for funders</li>
-    </ul>
-    <span class="nace-badge" style="margin-top:1rem;">M70.22 Consultancy · M72.20 Social Science Research</span>
-  </div>
-
-  <!-- SERVICE 4 -->
-  <div class="section-header reveal">
-    <span class="section-num">04 / 08</span>
-    <span class="section-title">Scientific Due Diligence for Finance &amp; Investment</span>
-    <span class="section-nace">NACE K64.99 · M70.22 · M72.19</span>
-  </div>
-  <div class="cell s7 reveal">
-    <h4>Services Delivered</h4>
-    <ul class="service-list">
-      <li>Scientific due diligence for biotech startups at seed, Series A, and growth stages</li>
-      <li>Pharma pipeline assessment — clinical, regulatory, and scalability risk analysis</li>
-      <li>Healthtech investment review — technology readiness, market pathway, regulatory timeline</li>
-      <li>Portfolio advisory for health-focused investment funds and development finance institutions</li>
-    </ul>
-    <span class="rule-line"></span>
-    <p style="font-size:0.82rem; opacity:0.75;">Financial institutions and investment committees require scientific risk translated into investment-grade language. This service delivers exactly that — lab science interpreted as risk, uncertainty quantified, and timelines grounded in regulatory reality.</p>
-  </div>
-  <div class="cell s5 cell-ink reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Biotech complexity decoded for financial decision-making. The arbitrage converts laboratory science — inherently probabilistic and technically dense — into investment risk frameworks that financial institutions can actually use for mandate decisions.</p>
-    <div class="arbitrage-tag">Lab Science ↔ Investment Risk Language</div>
-    <span class="nace-badge">K64.99 Financial Services · M70.22 Management Consultancy · M72.19 Scientific R&amp;D</span>
-  </div>
-
-  <!-- SERVICE 5 -->
-  <div class="section-header reveal">
-    <span class="section-num">05 / 08</span>
-    <span class="section-title">Knowledge Systems, Standards &amp; Guidelines Development</span>
-    <span class="section-nace">NACE J63.99 · M74.90 · M72.19</span>
-  </div>
-  <div class="cell s6 reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Fragmented expertise converted into structured institutional knowledge assets. Institutions consistently lose value through knowledge dispersion — expertise that exists within project cycles but never consolidates into reusable frameworks. This portfolio delivers that consolidation.</p>
-    <span class="rule-line"></span>
-    <h4>Services Delivered</h4>
-    <ul class="service-list">
-      <li>Technical guidelines development across health, biotechnology, and education sectors</li>
-      <li>Knowledge platforms and institutional repositories — architecture, curation, and governance</li>
-      <li>Standardization frameworks for inter-institutional and cross-border coordination</li>
-      <li>Training modules and certification scheme design for professional capacity systems</li>
-    </ul>
-  </div>
-  <div class="cell s6 cell-dark reveal">
-    <h4>Applications by Sector</h4>
-    <ul class="service-list">
-      <li>Health: clinical protocol libraries, regulatory compliance toolkits, evidence synthesis systems</li>
-      <li>Biotech: R&amp;D documentation standards, IP knowledge management frameworks</li>
-      <li>Education: EMIS knowledge architectures, teacher competency frameworks, SDG 4 monitoring tools</li>
-      <li>Agri-Food: commodity intelligence platforms, food safety traceability standards</li>
-    </ul>
-    <div class="arbitrage-tag">Scattered Expertise ↔ Institutional Knowledge Assets</div>
-    <span class="nace-badge">J63.99 Information Services · M74.90 Technical Activities · M72.19 R&amp;D</span>
-  </div>
-
-  <!-- SERVICE 6 -->
-  <div class="section-header reveal">
-    <span class="section-num">06 / 08</span>
-    <span class="section-title">Capacity Building &amp; Executive Training</span>
-    <span class="section-nace">NACE P85.59 · M70.22</span>
-  </div>
-  <div class="cell s4 cell-ink reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Elite expertise converted into institutional capability. Organisations with strong mandates but limited scientific literacy require targeted executive-level knowledge transfer — not generic training, but precisely calibrated scientific and regulatory fluency.</p>
-    <div class="arbitrage-tag">Elite Knowledge ↔ Institutional Capacity</div>
-    <span class="nace-badge">P85.59 Other Education · M70.22 Consultancy</span>
-  </div>
-  <div class="cell s4 reveal">
-    <h4>Target Participants</h4>
-    <ul class="service-list">
-      <li>Government officials and ministry decision-makers</li>
-      <li>Bank analysts covering health, biotech, and food sectors</li>
-      <li>UN and EU programme managers and technical staff</li>
-      <li>NGO leadership in health and education mandates</li>
-    </ul>
-  </div>
-  <div class="cell s4 cell-dark reveal">
-    <h4>Training Topics</h4>
-    <ul class="service-list">
-      <li>Biotech policy and regulatory science</li>
-      <li>Health systems design and health economics</li>
-      <li>Scientific evidence for institutional decision-making</li>
-      <li>Education data systems and EMIS for managers</li>
-      <li>Food systems intelligence and early warning frameworks</li>
-    </ul>
-  </div>
-
-  <!-- SERVICE 7 -->
-  <div class="section-header reveal">
-    <span class="section-num">07 / 08</span>
-    <span class="section-title">Multilingual Negotiation &amp; Diplomatic Technical Advisory</span>
-    <span class="section-nace">NACE M74.30 · M70.22</span>
-  </div>
-  <div class="cell s7 reveal">
-    <h4>Services Delivered</h4>
-    <ul class="service-list">
-      <li>Technical negotiation support for health agreements and research collaboration frameworks</li>
-      <li>Scientific diplomacy facilitation — EU–MENA and EU–Africa partnership structures</li>
-      <li>Multilingual policy facilitation across institutional negotiation settings</li>
-      <li>Cross-cultural technical advisory for joint programme design</li>
-    </ul>
-    <span class="rule-line"></span>
-    <p style="font-size:0.82rem; opacity:0.75;">International negotiations fail not because of political will but because of the absence of a trusted technical interlocutor who can bridge language, scientific precision, and institutional power simultaneously. This service fills that role.</p>
-  </div>
-  <div class="cell s5 cell-dark reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Language, science, and policy negotiation unified in a single advisor. Effective international technical agreements require a rare combination: multilingual fluency, scientific credibility, and institutional literacy. These capacities rarely coexist within one individual.</p>
-    <div class="arbitrage-tag">Language ↔ Science ↔ Policy Negotiation</div>
-    <span class="nace-badge">M74.30 Translation &amp; Interpretation · M70.22 Consultancy</span>
-  </div>
-
-  <!-- SERVICE 8 -->
-  <div class="section-header reveal">
-    <span class="section-num">08 / 08</span>
-    <span class="section-title">Innovation Ecosystem &amp; Startup Advisory</span>
-    <span class="section-nace">NACE M70.22 · M72.11 · J62.01</span>
-  </div>
-  <div class="cell s4 reveal">
-    <h4>Core Arbitrage</h4>
-    <p>Research commercialised through policy funding ecosystems. Universities and research institutions generate scientific value that rarely reaches market — not from lack of quality, but from lack of translation across the commercialisation gap.</p>
-    <div class="arbitrage-tag">Research ↔ Commercialisation ↔ Funding</div>
-    <span class="nace-badge">M70.22 · M72.11 Biotech R&amp;D · J62.01 Software</span>
-  </div>
-  <div class="cell s4 cell-dark reveal">
-    <h4>Services Delivered</h4>
-    <ul class="service-list">
-      <li>University spin-off strategy — from IP disclosure to market positioning</li>
-      <li>Biotech incubator programme design and operational framework</li>
-      <li>Public-private partnership structuring for research commercialisation</li>
-    </ul>
-  </div>
-  <div class="cell s4 reveal">
-    <h4>Ecosystem Connections</h4>
-    <ul class="service-list">
-      <li>Horizon Europe and EIC funding strategy</li>
-      <li>EIB and development finance alignment for health startups</li>
-      <li>Technology transfer office capacity building</li>
-      <li>Digital health platform regulatory pathway design</li>
-    </ul>
-  </div>
-
-</div>
-</section>
-
-
-<!-- ════════════════════════════════════════ -->
-<!-- FOOTER / CONTACT -->
-<!-- ════════════════════════════════════════ -->
-<footer id="contact">
-<div class="footer-grid">
-  <div class="footer-main">
-    <p style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem;">Engage Dr. Musaraj</p>
-    <h2 class="footer-name">High-Stakes Knowledge<br>Arbitrage Services</h2>
-    <p class="footer-tagline">Dr. Adanela Musaraj is available for institutional mandates, programme advisory, due diligence commissions, evaluation contracts, and executive training engagements. All services are structured to be compatible with UN, EU, and banking procurement frameworks and formally classifiable under NACE codes M, P, E, and K.</p>
-    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(245,242,236,0.12);">
-      <p style="font-size:0.78rem; color:rgba(245,242,236,0.35); font-family:'DM Mono',monospace; letter-spacing:0.08em;">NACE Anchor: 72.10 — R&amp;D Natural Sciences &amp; Engineering</p>
-      <p style="font-size:0.78rem; color:rgba(245,242,236,0.35); font-family:'DM Mono',monospace; letter-spacing:0.08em; margin-top:0.3rem;">Sections M · P · E · A–D · K</p>
-    </div>
-  </div>
-  <div class="footer-contact">
-    <div>
-      <h3>Contact</h3>
-      <div class="contact-line">
-        <strong>Email</strong>
-        <a href="mailto:adanela.musaraj@yahoo.fr">adanela.musaraj@yahoo.fr</a>
+  <!-- STATS STRIP -->
+  <section class="px-8n pb-16n">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4n">
+      <div class="glass-card p-8n text-center">
+        <div class="font-serif text-4xl font-light text-gold mb-2n">8</div>
+        <div class="font-mono text-fluid-xs uppercase text-paper/60">Structured Portfolios</div>
       </div>
-      <div class="contact-line" style="margin-top:1rem;">
-        <strong>Institutional Scope</strong>
-        <span style="font-size:0.88rem; display:block; margin-top:0.2rem;">Banks · UN Agencies · EU Agencies<br>International NGOs · Education Sector</span>
+      <div class="glass-card p-8n text-center">
+        <div class="font-serif text-4xl font-light text-paper mb-2n">4</div>
+        <div class="font-mono text-fluid-xs uppercase text-paper/60">Industry Sectors</div>
       </div>
-      <div class="contact-line" style="margin-top:1rem;">
-        <strong>Mandate Types</strong>
-        <span style="font-size:0.88rem; display:block; margin-top:0.2rem;">Advisory · Programme Design<br>Evaluation · Training · Due Diligence</span>
+      <div class="glass-card p-8n text-center">
+        <div class="font-serif text-2xl font-light text-gold mb-2n">UN · EU · Banks</div>
+        <div class="font-mono text-fluid-xs uppercase text-paper/60">Institutional Clients</div>
+      </div>
+      <div class="glass-card p-8n text-center">
+        <div class="font-serif text-2xl font-light text-paper mb-2n">NACE M·P·E·K</div>
+        <div class="font-mono text-fluid-xs uppercase text-paper/60">Classification Codes</div>
       </div>
     </div>
-    <div style="margin-top:2rem;">
-      <p style="font-size:0.78rem; opacity:0.65; line-height:1.7;">All engagements are subject to institutional procurement compliance. Formal mandate documentation, CVs, and reference materials are available upon request.</p>
-    </div>
-  </div>
-  <div class="footer-copy">
-    <span>Dr. Adanela Musaraj — Scientific-Policy-Finance Interface Consultant</span>
-    <span>High-Stakes Knowledge Arbitrage · Health · Biotech · Education · Food Systems</span>
-  </div>
-</div>
-</footer>
+  </section>
 
-<script>
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  reveals.forEach(el => observer.observe(el));
-</script>
+  <!-- BENTO GRID: SERVICES HUB -->
+  <section id="services" class="px-8n py-16n">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="mb-16n">
+        <div class="font-mono text-fluid-xs tracking-widest uppercase text-gold mb-4n">01 — 08</div>
+        <h2 class="text-fluid-h2 mb-4n">Knowledge Arbitrage Service Portfolios</h2>
+        <p class="text-fluid-body text-paper/70 max-w-2xl">
+          Each portfolio is NACE-coded, procurement-compatible, and institutionally legible — designed for Banks, UN agencies, EU bodies, and International NGOs requiring high-fidelity evaluation and advisory services.
+        </p>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="bento-grid">
+        
+        <!-- Card 1: Strategic Science & Policy -->
+        <article class="bento-item glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="scale" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">Strategic Science &amp; Policy Advisory</h3>
+          </div>
+          <p class="text-fluid-sm text-paper/75 mb-6n">
+            Converting molecular biology, pharmaceutical insights, and regulatory science into institutional decision frameworks for EU and UN audiences.
+          </p>
+          <ul class="space-y-2n text-fluid-sm text-paper/65 mb-6n">
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Science-to-Policy Translation</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Regulatory Intelligence &amp; Foresight</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Evidence-Based Investment Risk Analysis</li>
+          </ul>
+          <button class="btn-luxury clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>Explore</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">NACE M70.22 · M72.19 · M74.90</div>
+        </article>
+
+        <!-- Card 2: Health Programme Design -->
+        <article class="bento-item glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="heart-pulse" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">Health &amp; Pharma Programme Design</h3>
+          </div>
+          <p class="text-fluid-sm text-paper/75 mb-6n">
+            Bridging international health guidelines with real-world programme execution at national levels — including pharmaceutical supply chains.
+          </p>
+          <ul class="space-y-2n text-fluid-sm text-paper/65 mb-6n">
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> National Health Programme Architecture</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Pharmaceutical Supply Chain Strategy</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Clinical Research Ecosystem Development</li>
+          </ul>
+          <button class="btn-luxury clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>Explore</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">NACE M70.22 · Q86.90 · M72.11</div>
+        </article>
+
+        <!-- Card 3: Evaluation & Impact (Wide) -->
+        <article class="bento-item-wide glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="target" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">High-Level Evaluation &amp; Impact Assessment</h3>
+          </div>
+          <div class="grid md:grid-cols-2 gap-8n">
+            <div>
+              <h4 class="mb-4n">Programme Evaluation</h4>
+              <ul class="space-y-2n text-fluid-sm text-paper/65">
+                <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Erasmus+ &amp; Horizon Europe Assessment</li>
+                <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> UN-Funded Health Programme Review</li>
+                <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Education Programme Impact Validation</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="mb-4n">Impact Metrics &amp; Validation</h4>
+              <ul class="space-y-2n text-fluid-sm text-paper/65">
+                <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> SDG Outcome Indicator Design</li>
+                <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> ESG Frameworks for Health Investments</li>
+                <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Scientific Validation for Institutional Funders</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-luxury mt-8n clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>View Methodology</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">NACE M70.22 · M72.20 · Keywords: evaluator, assessor, World Bank, IMF</div>
+        </article>
+
+        <!-- Card 4: Scientific Due Diligence -->
+        <article class="bento-item glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="shield-check" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">Scientific Due Diligence</h3>
+          </div>
+          <p class="text-fluid-sm text-paper/75 mb-6n">
+            Biotech complexity decoded for financial decision-making. Lab science interpreted as investment-grade risk frameworks.
+          </p>
+          <ul class="space-y-2n text-fluid-sm text-paper/65 mb-6n">
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Startup Seed/Series A Assessment</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Pharma Pipeline Risk Analysis</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Healthtech Regulatory Pathway Review</li>
+          </ul>
+          <button class="btn-luxury clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>Explore</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">NACE K64.99 · M70.22 · TRL3-7 Assessments</div>
+        </article>
+
+        <!-- Card 5: IP & TRL Evaluation -->
+        <article class="bento-item glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="file-badge" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">IP Evaluation &amp; TRL3-7 Assessments</h3>
+          </div>
+          <p class="text-fluid-sm text-paper/75 mb-6n">
+            Technology Readiness Level assessments for high-stakes institutional procurement. IP valuation aligned with EU compliance frameworks.
+          </p>
+          <ul class="space-y-2n text-fluid-sm text-paper/65 mb-6n">
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> TRL3-7 Validation Frameworks</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> IP Portfolio Risk Assessment</li>
+            <li class="flex items-start gap-2n"><span class="text-gold mt-1">•</span> Interreg &amp; EU Funding Alignment</li>
+          </ul>
+          <button class="btn-luxury clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>Explore</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">Keywords: IP evaluation, TRL3-7, Interreg, EU compliance</div>
+        </article>
+
+        <!-- Card 6: Institutional Funnel (Wide) -->
+        <article class="bento-item-wide glass-card p-8n reveal-stagger funnel-card clickable" id="funnel">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="users" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">For Institutional Decision-Makers</h3>
+          </div>
+          <div class="grid md:grid-cols-3 gap-6n">
+            <div class="p-6n rounded-2xl bg-accent/50 border border-subtle">
+              <div class="font-mono text-fluid-xs uppercase text-gold mb-3n">Researchers</div>
+              <p class="text-fluid-sm text-paper/70 mb-4n">
+                ORCID, DOI, and ISSN integration for academic publications. Conference proceedings with ISBN indexing. Fully remote collaboration.
+              </p>
+              <a href="#contact" class="font-mono text-fluid-xs text-gold-light hover:text-gold transition-premium clickable inline-flex items-center gap-2n">
+                <span>Connect</span>
+                <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+              </a>
+            </div>
+            <div class="p-6n rounded-2xl bg-accent/50 border border-subtle">
+              <div class="font-mono text-fluid-xs uppercase text-gold mb-3n">Universities</div>
+              <p class="text-fluid-sm text-paper/70 mb-4n">
+                Program evaluation, project assessment, and TRL validation for research commercialization. ROR institutional identifier mapping.
+              </p>
+              <a href="#contact" class="font-mono text-fluid-xs text-gold-light hover:text-gold transition-premium clickable inline-flex items-center gap-2n">
+                <span>Engage</span>
+                <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+              </a>
+            </div>
+            <div class="p-6n rounded-2xl bg-accent/50 border border-subtle">
+              <div class="font-mono text-fluid-xs uppercase text-gold mb-3n">Procurement Offices</div>
+              <p class="text-fluid-sm text-paper/70 mb-4n">
+                NACE-coded services (Q86/K65) for World Bank, IMF, Interreg tenders. Evaluation frameworks compliant with EU procurement standards.
+              </p>
+              <a href="#contact" class="font-mono text-fluid-xs text-gold-light hover:text-gold transition-premium clickable inline-flex items-center gap-2n">
+                <span>Request Brief</span>
+                <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+          <div class="mt-8n pt-6n border-t border-subtle">
+            <p class="text-fluid-sm text-paper/60">
+              <span class="text-gold">Keywords for indexing:</span> evaluator, assessor, interreg, World Bank, IMF, program evaluation, project evaluation, startup evaluation, IP evaluation, TRL3-7 assessments, fully remote, ISBN, ISSN, ORCID, DOI, ROR
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 7: Capacity Building -->
+        <article class="bento-item glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="graduation-cap" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">Executive Training</h3>
+          </div>
+          <p class="text-fluid-sm text-paper/75 mb-6n">
+            Elite expertise converted into institutional capability. Targeted scientific and regulatory fluency for decision-makers.
+          </p>
+          <button class="btn-luxury clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>View Topics</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">NACE P85.59 · M70.22</div>
+        </article>
+
+        <!-- Card 8: Innovation Ecosystem -->
+        <article class="bento-item glass-card p-8n reveal-stagger clickable">
+          <div class="flex items-center gap-3n mb-6n">
+            <i data-lucide="lightbulb" class="w-5 h-5 text-gold"></i>
+            <h3 class="text-fluid-h3">Innovation Ecosystem Advisory</h3>
+          </div>
+          <p class="text-fluid-sm text-paper/75 mb-6n">
+            University spin-off strategy, biotech incubator design, and public-private partnership structuring for research commercialization.
+          </p>
+          <button class="btn-luxury clickable">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <span>Explore</span>
+          </button>
+          <div class="mt-6n font-mono text-fluid-xs text-paper/40">NACE M70.22 · M72.11 · J62.01</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA SECTION -->
+  <section id="contact" class="px-8n py-24n bg-accent/30">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="font-mono text-fluid-xs tracking-widest uppercase text-gold mb-6n">Engage Dr. Musaraj</div>
+      <h2 class="text-fluid-h2 mb-8n">High-Stakes Knowledge Arbitrage Services</h2>
+      <p class="text-fluid-body text-paper/70 mb-12n max-w-2xl mx-auto">
+        Available for institutional mandates, programme advisory, due diligence commissions, evaluation contracts, and executive training engagements. All services structured for UN, EU, and banking procurement frameworks.
+      </p>
+      
+      <div class="glass-card p-12n mb-12n">
+        <div class="grid md:grid-cols-2 gap-8n text-left">
+          <div>
+            <div class="font-mono text-fluid-xs uppercase text-gold mb-4n">Contact</div>
+            <a href="mailto:adanela.musaraj@yahoo.fr" class="text-fluid-body text-gold-light hover:text-gold transition-premium clickable block mb-4n">
+              adanela.musaraj@yahoo.fr
+            </a>
+            <div class="text-fluid-sm text-paper/60">
+              <span class="block font-mono text-fluid-xs uppercase mb-2n">Institutional Scope</span>
+              Banks · UN Agencies · EU Agencies<br/>International NGOs · Education Sector
+            </div>
+          </div>
+          <div>
+            <div class="font-mono text-fluid-xs uppercase text-gold mb-4n">Mandate Types</div>
+            <ul class="space-y-2n text-fluid-sm text-paper/70">
+              <li>• Advisory &amp; Programme Design</li>
+              <li>• Evaluation &amp; Impact Assessment</li>
+              <li>• Scientific Due Diligence</li>
+              <li>• Executive Training &amp; Capacity Building</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn-luxury px-12n py-4n text-fluid-sm clickable">
+        <i data-lucide="mail" class="w-4 h-4"></i>
+        <span>Request Institutional Brief</span>
+      </button>
+      
+      <div class="mt-16n font-mono text-fluid-xs text-paper/40">
+        <p>NACE Anchor: 72.10 — R&amp;D Natural Sciences &amp; Engineering</p>
+        <p class="mt-2n">Sections M · P · E · K · Fully Remote · ISBN/ISSN/ORCID/DOI/ROR Indexing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-subtle py-8n px-8n">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4n">
+      <span class="font-mono text-fluid-xs text-paper/40">
+        Dr. Adanela Musaraj — Scientific-Policy-Finance Interface Consultant
+      </span>
+      <span class="font-mono text-fluid-xs text-paper/40">
+        High-Stakes Knowledge Arbitrage · Health · Biotech · Education · Food Systems
+      </span>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Custom Cursor Logic
+    const cursor = document.getElementById('customCursor');
+    const clickableElements = document.querySelectorAll('.clickable, a, button, [role="button"]');
+    
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    clickableElements.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+
+    // Staggered Reveal on Scroll
+    const revealElements = document.querySelectorAll('.reveal-stagger');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Mobile menu toggle (basic implementation)
+    const menuBtn = document.querySelector('.md\\:hidden [aria-label="Menu"]');
+    const nav = document.querySelector('nav .hidden.md\\:flex');
+    if (menuBtn && nav) {
+      menuBtn.addEventListener('click', () => {
+        nav.classList.toggle('hidden');
+        nav.classList.toggle('flex');
+        nav.classList.toggle('flex-col');
+        nav.classList.toggle('absolute');
+        nav.classList.toggle('top-full');
+        nav.classList.toggle('left-0');
+        nav.classList.toggle('right-0');
+        nav.classList.toggle('bg-ink');
+        nav.classList.toggle('p-8n');
+        nav.classList.toggle('border-t');
+        nav.classList.toggle('border-subtle');
+      });
+    }
+  </script>
 </body>
 </html>
